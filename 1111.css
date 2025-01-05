@@ -1,81 +1,26 @@
-/* Общий стиль */
-body {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-}
+document.addEventListener("DOMContentLoaded", function() {
+  const heartContainer = document.querySelector(".big-heart");
 
-/* Текст сверху */
-.text {
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 30px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
+  // Функция для добавления маленьких сердечек
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("small-heart");
 
-/* Контейнер большого сердца */
-.big-heart {
-  position: relative;
-  width: 200px;
-  height: 180px;
-  transform: rotate(-45deg);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  overflow: visible;
-  z-index: 5;
-}
+    // Случайная позиция для маленького сердечка
+    const randomX = Math.random() * 100 - 50; // случайное смещение по X
+    const randomY = Math.random() * 100 - 50; // случайное смещение по Y
 
-/* Маленькое сердечко */
-.small-heart {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: red;
-  transform: rotate(-45deg) scale(0);
-  animation: grow 2s ease-in-out forwards;
-}
+    heart.style.left = `${randomX}%`;
+    heart.style.top = `${randomY}%`;
 
-.small-heart:before,
-.small-heart:after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: red;
-  border-radius: 50%;
-}
+    heartContainer.appendChild(heart);
 
-.small-heart:before {
-  top: -10px;
-  left: 0;
-}
-
-.small-heart:after {
-  top: 0;
-  left: -10px;
-}
-
-/* Анимация увеличения сердечка */
-@keyframes grow {
-  0% {
-    transform: scale(0);
-    opacity: 0;
+    // Удаляем сердце через 2 секунды
+    setTimeout(() => {
+      heart.remove();
+    }, 2000);
   }
-  50% {
-    transform: scale(1.5);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+
+  // Добавляем маленькие сердечки каждые 200ms
+  setInterval(createHeart, 200);
+});
